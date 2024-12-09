@@ -19,6 +19,7 @@ class FeedbackDto(BaseModel):
 
 class SummaryDto(BaseModel):
     title: str
+    current_score: float
     content: str
     keyword: list
 
@@ -29,8 +30,6 @@ class ProposalEvaluationResponseDto(BaseModel):
     summary: SummaryDto
 
 # Summary
-
-
 class SummaryGenerationRequestDto(BaseModel):
     title: str
     content: str

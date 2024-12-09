@@ -18,16 +18,16 @@ class EvaluationPrompt(Enum):
 
         Step1 Message
         Based on the title and content, try to find a message this proposal is about.
-        Grade this part between 0.00 ~ 3.00 points.
+        Grade this part between 0.00 ~ 30.00 points.
 
         Step2 Target
         Based on the title, content, and additional_features try to find the target audience of this proposal.
-        Grade this part between 0.00 ~ 3.00 points.
+        Grade this part between 0.00 ~ 30.00 points.
 
         Step3 Relevance
         Based on the message and target you found from previous steps evaluate the relevance between the message, target audience, and the proposal itself.
         Evaluate every component of this proposal correlated.
-        Grade this part between 0.00 ~ 4.00 points.
+        Grade this part between 0.00 ~ 40.00 points.
 
         After the evaluation, you must generate the result as follows. Don't generate any other text besides the result.
         {{
