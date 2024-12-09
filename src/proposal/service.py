@@ -60,7 +60,7 @@ def proposal_evaluation(request: ProposalEvaluationRequestDto) -> ProposalEvalua
         content_evaluation_result['target'] + "Relevance: " + \
         content_evaluation_result['relevance'] + SEP + proposal
 
-    if (total_score < 6.0):
+    if (total_score <= 65.0):
         generated_feedback = content_feedback(
             content_feedback_prompt=content_feedback_prompt,
             proposal=evaluated_proposal
@@ -77,6 +77,7 @@ def proposal_evaluation(request: ProposalEvaluationRequestDto) -> ProposalEvalua
             summary=SummaryDto(
                 title="",
                 content="",
+                current_score=0.0,
                 keyword=[]
             )
         )
@@ -111,6 +112,7 @@ def proposal_evaluation(request: ProposalEvaluationRequestDto) -> ProposalEvalua
             summary=SummaryDto(
                 title="",
                 content="",
+                current_score=0.0,
                 keyword=[]
             )
         )
@@ -132,7 +134,8 @@ def proposal_evaluation(request: ProposalEvaluationRequestDto) -> ProposalEvalua
         summary=SummaryDto(
             title=generated_summary['title'],
             content=generated_summary['content'],
-            keyword=generated_summary['keyword']
+            keyword=generated_summary['keyword'],
+            current_score=total_score
         )
     )
 
@@ -144,6 +147,7 @@ def summary_generation(request: SummaryGenerationRequestDto) -> SummaryDto:
         + request.media_type + SEP \
         + str(request.proposal_score) + SEP \
         + str(request.additional_features)
+        
 
     # Prompt
     generation_prompt = GenerationPrompt
@@ -166,6 +170,7 @@ def summary_generation(request: SummaryGenerationRequestDto) -> SummaryDto:
         summary=SummaryDto(
             title=generated_summary['title'],
             content=generated_summary['content'],
-            keyword=generated_summary['keyword']
+            keyword=generated_summary['keyword'],
+            current_score=request.proposal_score
         )
     )
