@@ -12,5 +12,5 @@ def proposal_evaluation_router(request: ProposalEvaluationRequestDto) -> Proposa
 
 
 @router.post("/gen/proposal/summary")
-def summary_generation_router(request: SummaryGenerationRequestDto) -> SummaryDto:
+def summary_generation_router(request: SummaryGenerationRequestDto) -> ProposalEvaluationResponseDto:
     return summary_generation(request)

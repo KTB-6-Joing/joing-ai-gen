@@ -140,7 +140,7 @@ def proposal_evaluation(request: ProposalEvaluationRequestDto) -> ProposalEvalua
     )
 
 
-def summary_generation(request: SummaryGenerationRequestDto) -> SummaryDto:
+def summary_generation(request: SummaryGenerationRequestDto) -> ProposalEvaluationResponseDto:
     # Proposal retrieved from db
     proposal = request.title + SEP \
         + request.content + SEP \
