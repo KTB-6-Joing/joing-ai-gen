@@ -16,7 +16,7 @@ def youtube_channel_request(youtube_data_api, channel_id):
         id=channel_id
     ).execute()
     if (channel_response['pageInfo']['totalResults'] == 0):
-        raise HTTPException(status_code=422, detail="유효하지 않은 채널아이디입니다.")
+        raise HTTPException(status_code=422, detail={"code":1, "message" : "유효하지 않은 채널아이디입니다."})
     return channel_response
 
 
@@ -31,7 +31,7 @@ def playlist_request(youtube_data_api, youtube_channel):
 
     if (len(playlist_response['items']) < 4):
         raise HTTPException(
-            status_code=422, detail="영상의 개수가 충분하지 않아 더이상의 평가가 불가능합니다.")
+            status_code=422, detail={"code":2, "message" : "영상의 개수가 충분하지 않아 더이상의 평가가 불가능합니다."})
     return playlist_response
 
 
