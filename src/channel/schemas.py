@@ -9,7 +9,7 @@ class ChannelEvaluationRequestDto(BaseModel):
     def validate_channel_id(cls, value):
         if len(value) != 24:
             raise HTTPException(
-                status_code=422, detail={"code": 0, "message":"유효하지 않은 형식의 채널아이디입니다."})
+                status_code=422, detail={"code": 'INVALID_CHANNEL_ID_FORMAT', "message": "유효하지 않은 형식의 채널아이디입니다."})
         return value
 
 
