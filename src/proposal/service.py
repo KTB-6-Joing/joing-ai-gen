@@ -127,15 +127,14 @@ def proposal_evaluation(request: ProposalEvaluationRequestDto) -> ProposalEvalua
         evaluation_result=1,
         feedback=FeedbackDto(
             feedback_type=0,
-            current_score=0,
+            current_score=0.0,
             comment="",
             violations=[]
         ),
         summary=SummaryDto(
             title=generated_summary['title'],
             content=generated_summary['content'],
-            keyword=generated_summary['keyword'],
-            current_score=total_score
+            keyword=generated_summary['keyword']
         )
     )
 
@@ -163,14 +162,13 @@ def summary_generation(request: SummaryGenerationRequestDto) -> ProposalEvaluati
         evaluation_result=1,
         feedback=FeedbackDto(
             feedback_type=0,
-            current_score=0,
+            current_score=0.0,
             comment="",
             violations=[]
         ),
         summary=SummaryDto(
             title=generated_summary['title'],
             content=generated_summary['content'],
-            keyword=generated_summary['keyword'],
-            current_score=request.proposal_score
+            keyword=generated_summary['keyword']
         )
     )
