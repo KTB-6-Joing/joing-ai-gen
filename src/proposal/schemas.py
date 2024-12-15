@@ -19,7 +19,6 @@ class FeedbackDto(BaseModel):
 
 class SummaryDto(BaseModel):
     title: str
-    current_score: float
     content: str
     keyword: list
 
