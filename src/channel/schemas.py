@@ -15,4 +15,5 @@ class ChannelEvaluationRequestDto(BaseModel):
 
 class ChannelEvaluationResponseDto(BaseModel):
     evaluation_status: bool
+    channel_image: str
     reason: str
