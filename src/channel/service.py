@@ -1,7 +1,7 @@
 from config import settings
 
 from channel.schemas import ChannelEvaluationRequestDto, ChannelEvaluationResponseDto
-from channel.methods.requests_methods import youtube_data_api_request, youtube_channel_request, playlist_request, image_request
+from channel.methods.requests_methods import youtube_data_api_request, youtube_channel_request, playlist_request, image_request, channel_image_parsing
 from channel.methods.preprocessing_methods import response_preprocessing, image_preprocessing
 from channel.methods.evaluation_methods import text_evaluation, image_evaluation
 from channel.prompts.evaluation_prompt import EvaluationPrompt
@@ -22,6 +22,11 @@ def channel_evaluation(request: ChannelEvaluationRequestDto) -> ChannelEvaluatio
         youtube_data_api=youtube_data_api,
         youtube_channel=channel_response)
 
+    # Getting Channel Image
+    channel_image = channel_image_parsing(
+        channel_id=request.channel_id, 
+        youtube_data_api=youtube_data_api)
+
     # Parsing response aka preprocessing
     videos_text_info, thumbnail_urls = response_preprocessing(
         playlist_response=playlist_response)
@@ -40,6 +45,7 @@ def channel_evaluation(request: ChannelEvaluationRequestDto) -> ChannelEvaluatio
         if (not image_evaluation_result['appropriate'] and len(image_evaluation_result['reason']) != 0):
             return ChannelEvaluationResponseDto(
                 evaluation_status=False,
+                channel_image=None,
                 reason=image_evaluation_result['reason']
             )
     except Exception as e:
@@ -51,5 +57,6 @@ def channel_evaluation(request: ChannelEvaluationRequestDto) -> ChannelEvaluatio
         description=videos_text_info, prompt=text_evaluation_prompt)
     return ChannelEvaluationResponseDto(
         evaluation_status=text_evaluation_result['appropriate'],
+        channel_image=channel_image,
         reason=text_evaluation_result['reason']
     )

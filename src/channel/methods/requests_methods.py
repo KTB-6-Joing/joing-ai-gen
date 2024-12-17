@@ -16,8 +16,28 @@ def youtube_channel_request(youtube_data_api, channel_id):
         id=channel_id
     ).execute()
     if (channel_response['pageInfo']['totalResults'] == 0):
-        raise HTTPException(status_code=422, detail={"code": 'INVALID_CHANNEL_ID', "message" : "유효하지 않은 채널아이디입니다."})
+        raise HTTPException(status_code=422, detail={
+                            "code": 'INVALID_CHANNEL_ID', "message": "유효하지 않은 채널아이디입니다."})
     return channel_response
+
+
+def channel_image_parsing(youtube_data_api, channel_id):
+    try:
+        channel_response = youtube_data_api.channels().list(
+            part='snippet',
+            id=channel_id
+        ).execute()
+        
+        # Check if the response contains valid channel data
+        if 'items' in channel_response and len(channel_response['items']) > 0:
+            thumbnails = channel_response['items'][0]['snippet']['thumbnails']
+            return thumbnails['medium']['url']
+        else:
+            print("Channel not found or no snippet data available.")
+            return None
+    except Exception as e:
+        print(e)
+        return None
 
 
 def playlist_request(youtube_data_api, youtube_channel):
@@ -31,7 +51,7 @@ def playlist_request(youtube_data_api, youtube_channel):
 
     if (len(playlist_response['items']) < 4):
         raise HTTPException(
-            status_code=422, detail={"code":'NOT_ENOUGH_UPLOADS', "message" : "영상의 개수가 충분하지 않아 더이상의 평가가 불가능합니다."})
+            status_code=422, detail={"code": 'NOT_ENOUGH_UPLOADS', "message": "영상의 개수가 충분하지 않아 더이상의 평가가 불가능합니다."})
     return playlist_response
 
 
