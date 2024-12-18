@@ -31,7 +31,7 @@ def proposal_evaluation(request: ProposalEvaluationRequestDto) -> ProposalEvalua
     summary_generation_prompt = generation_prompt.summary_generation_prompt.value
 
     # Volume Check
-    if (volume_evaluation(proposal=proposal)):
+    if (volume_evaluation(proposal=proposal, media_type=request.media_type)):
         return ProposalEvaluationResponseDto(
             evaluation_result=0,
             feedback=FeedbackDto(

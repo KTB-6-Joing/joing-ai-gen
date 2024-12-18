@@ -27,7 +27,7 @@ def channel_image_parsing(youtube_data_api, channel_id):
             part='snippet',
             id=channel_id
         ).execute()
-        
+
         # Check if the response contains valid channel data
         if 'items' in channel_response and len(channel_response['items']) > 0:
             thumbnails = channel_response['items'][0]['snippet']['thumbnails']
@@ -38,6 +38,14 @@ def channel_image_parsing(youtube_data_api, channel_id):
     except Exception as e:
         print(e)
         return None
+
+
+def channel_subscribers_parsing(youtube_data_api, channel_id):
+    channel_response = youtube_data_api.channels().list(
+        part='statistics',
+        id=channel_id
+    ).execute()
+    return channel_response["items"][0]["statistics"]["subscriberCount"]
 
 
 def playlist_request(youtube_data_api, youtube_channel):
