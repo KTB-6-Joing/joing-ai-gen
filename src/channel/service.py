@@ -1,7 +1,7 @@
 from config import settings
 
 from channel.schemas import ChannelEvaluationRequestDto, ChannelEvaluationResponseDto
-from channel.methods.requests_methods import youtube_data_api_request, youtube_channel_request, playlist_request, image_request, channel_image_parsing
+from channel.methods.requests_methods import youtube_data_api_request, youtube_channel_request, playlist_request, image_request, channel_image_parsing, channel_subscribers_parsing
 from channel.methods.preprocessing_methods import response_preprocessing, image_preprocessing
 from channel.methods.evaluation_methods import text_evaluation, image_evaluation
 from channel.prompts.evaluation_prompt import EvaluationPrompt
@@ -26,6 +26,11 @@ def channel_evaluation(request: ChannelEvaluationRequestDto) -> ChannelEvaluatio
     channel_image = channel_image_parsing(
         channel_id=request.channel_id, 
         youtube_data_api=youtube_data_api)
+    
+    # Getting Channel Subscriber Counts
+    subscribers_count = channel_subscribers_parsing(
+        youtube_data_api=youtube_data_api,
+        channel_id=request.channel_id)
 
     # Parsing response aka preprocessing
     videos_text_info, thumbnail_urls = response_preprocessing(
@@ -46,6 +51,7 @@ def channel_evaluation(request: ChannelEvaluationRequestDto) -> ChannelEvaluatio
             return ChannelEvaluationResponseDto(
                 evaluation_status=False,
                 channel_image=None,
+                subscribers=None,
                 reason=image_evaluation_result['reason']
             )
     except Exception as e:
@@ -58,5 +64,6 @@ def channel_evaluation(request: ChannelEvaluationRequestDto) -> ChannelEvaluatio
     return ChannelEvaluationResponseDto(
         evaluation_status=text_evaluation_result['appropriate'],
         channel_image=channel_image,
+        subscribers=subscribers_count,
         reason=text_evaluation_result['reason']
     )

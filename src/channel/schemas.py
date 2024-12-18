@@ -15,5 +15,6 @@ class ChannelEvaluationRequestDto(BaseModel):
 
 class ChannelEvaluationResponseDto(BaseModel):
     evaluation_status: bool
+    subscribers: int
     channel_image: str
     reason: str

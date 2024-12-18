@@ -9,9 +9,11 @@ from langchain_core.output_parsers import StrOutputParser
 
 # Volume
 # Got to be more than 200 hundreds tokens
-def volume_evaluation(proposal):
+def volume_evaluation(proposal, media_type):
     tokenizer = tiktoken.encoding_for_model("gpt-4o-mini")
-    return (len(tokenizer.encode(proposal))) < 200
+    if (media_type=="long_form"):
+        return (len(tokenizer.encode(proposal))) < 200
+    return (len(tokenizer.encode(proposal))) < 100
 
 # Content
 # Content score got to be 6.5 at least
