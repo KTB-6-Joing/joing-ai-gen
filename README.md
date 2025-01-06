@@ -8,6 +8,17 @@
 
 ## Contributor
 
+<div align="center">
+
+| ![Wooyong Jeong](https://github.com/jwywoo.png?size=300)|
+|:-------------------------:|
+| [jwywoo26@egmail.com](mailto:jwywoo26@gmail.com) |
+| [GitHub](https://github.com/jwywoo) |
+| **Wooyong Jeong: Woo**             |
+| AI Developer             |
+
+</div>
+
 <br>
 
 ## Tech Stack
